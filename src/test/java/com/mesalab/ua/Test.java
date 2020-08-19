@@ -5,8 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import com.mesalab.ua.UserAgent;
-import com.mesalab.ua.Parser;
+import com.mesalab.ua.dto.UserAgent;
 
 import java.io.*;
 import java.util.*;

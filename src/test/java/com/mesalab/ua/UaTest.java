@@ -1,7 +1,6 @@
 package com.mesalab.ua;
 
-import com.mesalab.ua.UserAgent;
-import com.mesalab.ua.Parser;
+import com.mesalab.ua.dto.UserAgent;
 
 import java.io.IOException;
 

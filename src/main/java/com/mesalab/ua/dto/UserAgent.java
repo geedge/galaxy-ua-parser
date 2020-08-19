@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mesalab.ua;
+package com.mesalab.ua.dto;
 
 /**
  * Collection of parsed data for a given user agent string consisting of UserAgent, OS, Device
@@ -34,8 +34,8 @@ public class UserAgent {
 
   @Override
   public boolean equals(Object other) {
-    if (other == this) return true;
-    if (!(other instanceof UserAgent)) return false;
+    if (other == this) {return true;}
+    if (!(other instanceof UserAgent)) {return false;}
 
     UserAgent o = (UserAgent) other;
     return ((this.client != null && this.client.equals(o.client)) || this.client == o.client) &&
@@ -53,7 +53,7 @@ public class UserAgent {
 
   @Override
   public String toString() {
-    return String.format("{\"user_agent\": %s, \"os\": %s, \"device\": %s}",
+    return String.format("{\"client\": %s, \"os\": %s, \"device\": %s}",
             client, os, device);
   }
 }

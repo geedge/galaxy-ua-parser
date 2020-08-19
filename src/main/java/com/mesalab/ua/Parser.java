@@ -21,6 +21,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import com.mesalab.ua.dto.Client;
+import com.mesalab.ua.dto.Device;
+import com.mesalab.ua.dto.OS;
+import com.mesalab.ua.dto.UserAgent;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -56,13 +60,13 @@ public class Parser {
   }
 
   public UserAgent parse(String agentString) {
-    Client ua = parseUserAgent(agentString);
+    Client client = parseClient(agentString);
     OS os = parseOS(agentString);
     Device device = deviceParser.parse(agentString);
-    return new UserAgent(ua, os, device);
+    return new UserAgent(client, os, device);
   }
 
-  public Client parseUserAgent(String agentString) {
+  public Client parseClient(String agentString) {
     return uaParser.parse(agentString);
   }
 
@@ -76,7 +80,7 @@ public class Parser {
 
   private void initialize(InputStream regexYaml) {
     Yaml yaml = new Yaml(new SafeConstructor());
-    
+
     @SuppressWarnings("unchecked")
     Map<String,List<Map<String,String>>> regexConfig = (Map<String,List<Map<String,String>>>) yaml.load(regexYaml);
 

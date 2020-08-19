@@ -16,6 +16,8 @@
 
 package com.mesalab.ua;
 
+import com.mesalab.ua.dto.Device;
+
 /**
  * @author Steve Jiang (@sjiang) <gh at iamsteve com>
  */

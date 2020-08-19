@@ -16,6 +16,8 @@
 
 package com.mesalab.ua;
 
+import com.mesalab.ua.dto.OS;
+
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -57,7 +59,7 @@ public class OSParser {
         return os;
       }
     }
-    return new OS("Other", null, null, null, null);
+    return new OS("Other", null, null);
   }
 
   protected static OSPattern patternFromMap(Map<String, String> configMap) {
@@ -67,26 +69,24 @@ public class OSParser {
     }
 
     return(new OSPattern(Pattern.compile(regex),
-                         configMap.get("os_replacement"),
-                         configMap.get("os_v1_replacement"),
-                         configMap.get("os_v2_replacement"),
-                         configMap.get("os_v3_replacement")));
+                         configMap.get("name_replacement"),
+                         configMap.get("version_replacement"),
+                         configMap.get("platform_replacement")));
   }
 
   protected static class OSPattern {
     private final Pattern pattern;
-    private final String osReplacement, v1Replacement, v2Replacement, v3Replacement;
+    private final String nameReplacement, versionReplacement, platformReplacement;
 
-    public OSPattern(Pattern pattern, String osReplacement, String v1Replacement, String v2Replacement, String v3Replacement) {
+    public OSPattern(Pattern pattern, String nameReplacement, String versionReplacement, String platformReplacement) {
       this.pattern = pattern;
-      this.osReplacement = osReplacement;
-      this.v1Replacement = v1Replacement;
-      this.v2Replacement = v2Replacement;
-      this.v3Replacement = v3Replacement;
+      this.nameReplacement = nameReplacement;
+      this.versionReplacement = versionReplacement;
+      this.platformReplacement = platformReplacement;
     }
 
     public OS match(String agentString) {
-      String family = null, v1 = null, v2 = null, v3 = null, v4 = null;
+      String name = null, version = null, platform = null;
       Matcher matcher = pattern.matcher(agentString);
 
       if (!matcher.find()) {
@@ -95,38 +95,30 @@ public class OSParser {
 
       int groupCount = matcher.groupCount();
 
-      if (osReplacement != null) {
+      if (nameReplacement != null) {
           if (groupCount >= 1) {
-              family = Pattern.compile("(" + Pattern.quote("$1") + ")")
-                              .matcher(osReplacement)
+              name = Pattern.compile("(" + Pattern.quote("$1") + ")")
+                              .matcher(nameReplacement)
                               .replaceAll(matcher.group(1));
           } else {
-              family = osReplacement;
+            name = nameReplacement;
           }
       } else if (groupCount >= 1) {
-        family = matcher.group(1);
+        name = matcher.group(1);
       }
 
-      if (v1Replacement != null) {
-        v1 = getReplacement(matcher, v1Replacement);
+      if (versionReplacement != null) {
+        version = getReplacement(matcher, versionReplacement);
       } else if (groupCount >= 2) {
-        v1 = matcher.group(2);
+        version = matcher.group(2);
       }
-      if (v2Replacement != null) {
-        v2 = getReplacement(matcher, v2Replacement);
+      if (platformReplacement != null) {
+        platform = getReplacement(matcher, platformReplacement);
       } else if (groupCount >= 3) {
-        v2 = matcher.group(3);
-      }
-      if (v3Replacement != null) {
-        v3 = getReplacement(matcher, v3Replacement);
-      } else if (groupCount >= 4) {
-        v3 = matcher.group(4);
-      }
-      if (groupCount >= 5) {
-        v4 = matcher.group(5);
+        platform = matcher.group(3);
       }
 
-      return family == null ? null : new OS(family, v1, v2, v3, v4);
+      return name == null ? null : new OS(name, version, platform);
     }
 
     private String getReplacement(Matcher matcher, String replacement) {

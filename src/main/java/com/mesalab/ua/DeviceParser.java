@@ -16,6 +16,8 @@
 
 package com.mesalab.ua;
 
+import com.mesalab.ua.dto.Device;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,15 +43,15 @@ public class DeviceParser {
       return null;
     }
 
-    String device = null;
+    String type = null,mdoel=null,brand=null;
     for (DevicePattern p : patterns) {
-      if ((device = p.match(agentString)) != null) {
+      if ((type = p.match(agentString)) != null) {
         break;
       }
     }
-    if (device == null) device = "Other";
+    if (type == null) {type = "Other";}
 
-    return new Device(device);
+    return new Device(type,mdoel,brand);
   }
 
   /**
@@ -96,7 +98,7 @@ public class DeviceParser {
         	int i = Integer.valueOf(substitution.substring(1));
             String replacement = matcher.groupCount() >= i && matcher.group(i) != null 
         			  ? Matcher.quoteReplacement(matcher.group(i)) : "";
-              device = device.replaceFirst("\\" + substitution, replacement);  
+              device = device.replaceFirst("\\" + substitution, replacement);
           }
           device = device.trim();
     	} else {

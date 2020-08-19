@@ -24,14 +24,13 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import com.mesalab.ua.Client;
+import com.mesalab.ua.dto.Client;
+import com.mesalab.ua.dto.Device;
+import com.mesalab.ua.dto.OS;
+import com.mesalab.ua.dto.UserAgent;
 import org.junit.Before;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
-import com.mesalab.ua.UserAgent;
-import com.mesalab.ua.Device;
-import com.mesalab.ua.OS;
-import com.mesalab.ua.Parser;
 
 /**
  * Tests parsing results match the expected results in the test_resources yamls
