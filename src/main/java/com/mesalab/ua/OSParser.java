@@ -112,10 +112,13 @@ public class OSParser {
       } else if (groupCount >= 2) {
         version = matcher.group(2);
       }
+
+
+
       if (platformReplacement != null) {
         platform = getReplacement(matcher, platformReplacement);
-      } else if (groupCount >= 3) {
-        platform = matcher.group(3);
+      } else {
+        platform = "Other";
       }
 
       return name == null ? null : new OS(name, version, platform);

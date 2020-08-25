@@ -529,22 +529,22 @@ client_parsers:
   # Outlook 2007
   - regex: 'Microsoft Office Outlook 12\.\d+\.\d+|MSOffice 12'
     name_replacement: 'Outlook'
-    v1_replacement: '2007'
+    version_replacement: '2007'
 
   # Outlook 2010
   - regex: 'Microsoft Outlook 14\.\d+\.\d+|MSOffice 14'
     name_replacement: 'Outlook'
-    v1_replacement: '2010'
+    version_replacement: '2010'
 
   # Outlook 2013
   - regex: 'Microsoft Outlook 15\.\d+\.\d+'
     name_replacement: 'Outlook'
-    v1_replacement: '2013'
+    version_replacement: '2013'
 
   # Outlook 2016
   - regex: 'Microsoft Outlook (?:Mail )?16\.\d+\.\d+|MSOffice 16'
     name_replacement: 'Outlook'
-    v1_replacement: '2016'
+    version_replacement: '2016'
 
   # Word 2014
   - regex: 'Microsoft Office (Word) 2014'
@@ -686,23 +686,23 @@ client_parsers:
 
   # weird android UAs
   - regex: '(Android) Donut'
-    v1_replacement: '1'
-    v2_replacement: '2'
+    version_replacement: '1'
+    type_replacement: 'Browser'
 
   - regex: '(Android) Eclair'
-    v1_replacement: '2'
-    v2_replacement: '1'
+    version_replacement: '2'
+    type_replacement: 'Browser'
 
   - regex: '(Android) Froyo'
-    v1_replacement: '2'
-    v2_replacement: '2'
+    version_replacement: '2'
+    type_replacement: 'Browser'
 
   - regex: '(Android) Gingerbread'
-    v1_replacement: '2'
-    v2_replacement: '3'
+    version_replacement: '2'
+    type_replacement: 'Browser'
 
   - regex: '(Android) Honeycomb'
-    v1_replacement: '3'
+    version_replacement: '3'
 
   # desktop mode
   # http://www.anandtech.com/show/3982/windows-phone-7-review
@@ -734,7 +734,7 @@ client_parsers:
   - regex: '(MAXTHON|Maxthon) (\d+)\.(\d+)'
     name_replacement: 'Maxthon'
   - regex: '(Maxthon|MyIE2|Uzbl|Shiira)'
-    v1_replacement: '0'
+    version_replacement: '0'
 
   - regex: '(BrowseX) \((\d+)\.(\d+)\.(\d+)'
 
@@ -785,11 +785,11 @@ client_parsers:
     name_replacement: 'ONE Browser'
 
   - regex: '(Avant)'
-    v1_replacement: '1'
+    version_replacement: '1'
 
   # This is the Tesla Model S (see similar entry in device parsers)
   - regex: '(QtCarBrowser)'
-    v1_replacement: '1'
+    version_replacement: '1'
 
   - regex: '^(iBrowser/Mini)(\d+).(\d+)'
     name_replacement: 'iBrowser Mini'
@@ -809,8 +809,8 @@ client_parsers:
     name_replacement: 'Nokia Browser'
   - regex: '(Series60)/5\.0'
     name_replacement: 'Nokia Browser'
-    v1_replacement: '7'
-    v2_replacement: '0'
+    version_replacement: '7'
+    type_replacement: 'Browser'
   - regex: '(Series60)/(\d+)\.(\d+)'
     name_replacement: 'Nokia OSS Browser'
   - regex: '(S40OviBrowser)/(\d+)\.(\d+)\.(\d+)\.(\d+)'
@@ -853,13 +853,14 @@ client_parsers:
   # Safari
   - regex: '(Version)/(\d+)\.(\d+)(?:\.(\d+)|).*Safari/'
     name_replacement: 'Safari'
+    type_replacement: 'Browser'
   # Safari didn't provide "Version/d.d.d" prior to 3.0
   - regex: '(Safari)/\d+'
 
   - regex: '(OLPC)/Update(\d+)\.(\d+)'
 
   - regex: '(OLPC)/Update()\.(\d+)'
-    v1_replacement: '0'
+    version_replacement: '0'
 
   - regex: '(SEMC\-Browser)/(\d+)\.(\d+)'
 
@@ -871,19 +872,19 @@ client_parsers:
 
   - regex: '(Trident)/(7|8)\.(0)'
     name_replacement: 'IE'
-    v1_replacement: '11'
+    version_replacement: '11'
 
   - regex: '(Trident)/(6)\.(0)'
     name_replacement: 'IE'
-    v1_replacement: '10'
+    version_replacement: '10'
 
   - regex: '(Trident)/(5)\.(0)'
     name_replacement: 'IE'
-    v1_replacement: '9'
+    version_replacement: '9'
 
   - regex: '(Trident)/(4)\.(0)'
     name_replacement: 'IE'
-    v1_replacement: '8'
+    version_replacement: '8'
 
   # Espial
   - regex: '(Espial)/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)'

@@ -1,3 +1,4 @@
+/*
 package com.mesalab.ua;
 
 import java.io.ByteArrayInputStream;
@@ -6,6 +7,7 @@ import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+*/
 /**
  * These tests really only redo the same tests as in ParserTest but with a
  * different Parser subclass Also the same tests will be run several times on
@@ -13,7 +15,8 @@ import org.junit.Test;
  *
  * @author niels
  *
- */
+ *//*
+
 public class CachingParserTest extends ParserTest {
 
   @Before
@@ -85,3 +88,4 @@ public class CachingParserTest extends ParserTest {
   }
 
 }
+*/

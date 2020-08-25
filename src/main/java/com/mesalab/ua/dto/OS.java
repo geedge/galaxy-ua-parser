@@ -26,7 +26,8 @@ import java.util.Map;
  * @author Steve Jiang (@sjiang) &lt;gh at iamsteve com&gt;
  */
 public class OS {
-    public final String name, version, platform;
+    public final String name, version;
+    public String platform;
 
     public OS(String name, String version, String platform) {
         this.name = name;
@@ -63,5 +64,9 @@ public class OS {
                 name == null ? Constants.EMPTY_STRING : '"' + name + '"',
                 version == null ? Constants.EMPTY_STRING : '"' + version + '"',
                 platform == null ? Constants.EMPTY_STRING : '"' + platform + '"');
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

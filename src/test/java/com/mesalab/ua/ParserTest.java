@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 
 package com.mesalab.ua;
 
@@ -32,11 +33,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
+*/
 /**
  * Tests parsing results match the expected results in the test_resources yamls
  *
  * @author Steve Jiang (@sjiang) <gh at iamsteve com>
- */
+ *//*
+
 public class ParserTest {
   final String TEST_RESOURCE_PATH = "/ua_parser/";
   Yaml yaml = new Yaml();
@@ -169,3 +172,4 @@ public class ParserTest {
     return new Parser(yamlInput);
   }
 }
+*/

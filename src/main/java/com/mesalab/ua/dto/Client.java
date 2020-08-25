@@ -42,8 +42,12 @@ public class Client {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {return true;}
-        if (!(other instanceof Client)) {return false;}
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Client)) {
+            return false;
+        }
 
         Client o = (Client) other;
         return ((this.name != null && this.name.equals(o.name)) || this.name == o.name) &&
@@ -65,7 +69,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return String.format("{\"name\": %s, \"version\": %s, \"type\": %s, \"engine\": %s}, \"engineVersion\": %s}",
+        return String.format("{\"name\": %s, \"version\": %s, \"type\": %s, \"engine\": %s, \"engineVersion\": %s}",
                 name == null ? Constants.EMPTY_STRING : '"' + name + '"',
                 version == null ? Constants.EMPTY_STRING : '"' + version + '"',
                 type == null ? Constants.EMPTY_STRING : '"' + type + '"',

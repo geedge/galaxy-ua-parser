@@ -122,19 +122,12 @@ public class ClientParser {
             }
 
             if (typeReplacement != null) {
-                type = typeReplacement;
-            } else if (groupCount >= 3) {
-                String group3 = matcher.group(3);
-                if (!isBlank(group3)) {
-                    type = group3;
-                }
-                if (groupCount >= 4) {
-                    String group4 = matcher.group(4);
-                    if (!isBlank(group4)) {
-                        type = group4;
-                    }
-                }
+                type = Utils.getReplacement(matcher, typeReplacement);
+            } else {
+                type = "Other";
             }
+
+            System.out.println("client: " + pattern);
             return name == null ? null : new Client(name, version, type, engine, engineVersion);
         }
 

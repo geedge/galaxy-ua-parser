@@ -12,15 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 
 package com.mesalab.ua;
 
 import com.mesalab.ua.dto.Client;
 
+*/
 /**
  * @author Steve Jiang (@sjiang) <gh at iamsteve com>
- */
+ *//*
+
 public class ClientTest extends DataTest<Client> {
   @Override
   protected Client getRandomInstance(long seed, StringGenerator g) {
@@ -37,4 +40,4 @@ public class ClientTest extends DataTest<Client> {
     return new Client(null, null, null, null);
   }
 
-}
+}*/

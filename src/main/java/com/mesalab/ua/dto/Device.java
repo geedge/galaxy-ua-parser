@@ -26,16 +26,17 @@ import java.util.Map;
  * @author Steve Jiang (@sjiang) &lt;gh at iamsteve com&gt;
  */
 public class Device {
-    public final String type, model, brand;
+    public final String name, brand, model, type;
 
-    public Device(String type, String model, String brand) {
-        this.type = type;
-        this.model = model;
+    public Device(String name, String brand, String model, String type) {
+        this.name = name;
         this.brand = brand;
+        this.model = model;
+        this.type = type;
     }
 
     public static Device fromMap(Map<String, String> m) {
-        return new Device(m.get("type"), m.get("model"), m.get("brand"));
+        return new Device(m.get("name"), m.get("brand"), m.get("model"), m.get("type"));
     }
 
     @Override
@@ -48,24 +49,27 @@ public class Device {
         }
 
         Device o = (Device) other;
-        return ((this.type != null && this.type.equals(o.type)) || this.type == o.type) &&
+        return ((this.name != null && this.name.equals(o.name)) || this.name == o.name) &&
                 ((this.model != null && this.model.equals(o.model)) || this.model == o.model) &&
-                ((this.brand != null && this.brand.equals(o.brand)) || this.brand == o.brand);
+                ((this.brand != null && this.brand.equals(o.brand)) || this.brand == o.brand)&&
+        ((this.type != null && this.type.equals(o.type)) || this.type == o.type) ;
     }
 
     @Override
     public int hashCode() {
-        int h = type == null ? 0 : type.hashCode();
-        h += model == null ? 0 : model.hashCode();
+        int h = name == null ? 0 : name.hashCode();
         h += brand == null ? 0 : brand.hashCode();
+        h += model == null ? 0 : model.hashCode();
+        h += type == null ? 0 : type.hashCode();
         return h;
     }
 
     @Override
     public String toString() {
-        return String.format("{\"type\": %s,\"model\": %s,\"brand\": %s}",
-                type == null ? Constants.EMPTY_STRING : '"' + type + '"',
+        return String.format("{\"name\": %s,\"brand\": %s,\"model\": %s,\"type\": %s}",
+                name == null ? Constants.EMPTY_STRING : '"' + name + '"',
+                brand == null ? Constants.EMPTY_STRING : '"' + brand + '"',
                 model == null ? Constants.EMPTY_STRING : '"' + model + '"',
-                brand == null ? Constants.EMPTY_STRING : '"' + brand + '"');
+                type == null ? Constants.EMPTY_STRING : '"' + type + '"');
     }
 }

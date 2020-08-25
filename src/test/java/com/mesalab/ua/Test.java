@@ -2,12 +2,17 @@ package com.mesalab.ua;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mesalab.ua.dto.UserAgent;
+import eu.bitwalker.useragentutils.Browser;
+import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import com.mesalab.ua.dto.UserAgent;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.*;
 
 public class Test {
@@ -19,17 +24,16 @@ public class Test {
         Parser uaParser = new Parser();
         UserAgent c = uaParser.parse(uaString);
         System.err.println(c);
-        System.out.println(c.client.family); // => "Mobile Safari"
-        System.out.println(c.client.major);  // => "5"
-        System.out.println(c.client.minor);  // => "1"
+        System.out.println(c.client.name); // => "Mobile Safari"
+        System.out.println(c.client.version);  // => "5"
+        System.out.println(c.client.type);  // => "1"
 
-        System.out.println(c.os.family);        // => "iOS"
-        System.out.println(c.os.major);         // => "5"
-        System.out.println(c.os.minor);         // => "1"
+        System.out.println(c.os.name);        // => "iOS"
+        System.out.println(c.os.version);         // => "5"
+        System.out.println(c.os.platform);         // => "1"
 
-        System.out.println(c.device.family);    // => "iPhone"
+        System.out.println(c.device);    // => "iPhone"
     }
-
     public static void main(String[] args) throws InterruptedException, IOException {
         String uaString = "Mozilla/6.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3";
 //        String usa = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36";
@@ -56,14 +60,29 @@ public class Test {
         }
         Collections.sort(uaList);
         String filePath = "C:\\Users\\Administrator\\Desktop\\data\\2.2.0\\uap.txt";
+
+        UserAgentAnalyzer uaa = UserAgentAnalyzer
+                .newBuilder()
+                .hideMatcherLoadStats()
+                .withCache(10000)
+                .build();
         //输出到文件
         try(BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)))){
-            for (String ua : uaList) {
-                Parser parser = new Parser();
+            Parser parser = new Parser();
+            int num =0;
+            for ( String ua : uaList) {
+                num++;
                 UserAgent parse = parser.parse(ua);
-                System.err.println(JSON.toJSONString( parser.parse(ua), true));
-                fos.write(JSON.toJSONString( parser.parse(ua)));
-                fos.newLine();
+//                eu.bitwalker.useragentutils.UserAgent userAgent = eu.bitwalker.useragentutils.UserAgent.parseUserAgentString(ua);
+                Browser browser = Browser.parseUserAgentString(ua);
+//                System.err.println(JSON.toJSONString(operatingSystem));
+//                System.err.println(JSON.toJSONString(userAgent));
+//                System.err.println(JSON.toJSONString(browser));
+                nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(ua);
+//                System.err.println(ua);
+    System.err.println("\n"+num+": "+"\n"+JSON.toJSONString( parse.client ,true)+"\n"+"browser: "+browser+"\n"+"DeviceClass:"+agent);
+//                fos.write(JSON.toJSONString( parser.parse(ua)));
+//                fos.newLine();
             }
         };
 
