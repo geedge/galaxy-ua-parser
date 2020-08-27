@@ -16,7 +16,7 @@ public class UaTest {
         try {
             Parser uaParser = new Parser();
             UserAgent c = uaParser.parse(uaString);
-            System.err.println(c.client);
+            System.err.println(c);
             System.out.println("=============================================");
             System.out.println("=============================================");
 

@@ -20,8 +20,18 @@ you will then have the following folder `uap-java/uap-core` which contains the c
 To build the project, execute
 ```
 mvn package
-```
 
+```
+maven:
+--------
+
+```
+        <dependency>
+            <groupId>com.zdjizhi</groupId>
+            <artifactId>galaxy-ua-parser</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+```
 Usage:
 --------
 ```java
@@ -29,20 +39,24 @@ Usage:
 
 ...
 
-  String uaString = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3";
+  String uaString = "Mozilla/5.0 (Linux; U; android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
 
   Parser uaParser = new Parser();
-  Client c = uaParser.parse(uaString);
+  UserAgent u = uaParser.parse(uaString);
 
-  System.out.println(c.client.family); // => "Mobile Safari"
-  System.out.println(c.client.major);  // => "5"
-  System.out.println(c.client.minor);  // => "1"
+  System.out.println(u.client.name); // => "Safari"
+  System.out.println(u.client.type);  // => "Browser"
+  System.out.println(u.client.engine);  // => "WebKit"
+  System.out.println(u.client.engineVersion);  // => "533.1"
 
-  System.out.println(c.os.family);        // => "iOS"
-  System.out.println(c.os.major);         // => "5"
-  System.out.println(c.os.minor);         // => "1"
+  System.out.println(c.os.name);        // => "Android"
+  System.out.println(c.os.version);         // => "2"
+  System.out.println(c.os.platform);         // => "HTC Nexus One"
 
-  System.out.println(c.device.family);    // => "iPhone"
+  System.out.println(c.device.name);    // => "HTC Nexus One"
+  System.out.println(c.device.brand);    // => "HTC"
+  System.out.println(c.device.model);    // => "Nexus One"
+  System.out.println(c.device.type);    // => "MOBILE"
 ```
 
 ## Publish to Sonatype OSSRH and Maven Central Repository
@@ -99,6 +113,4 @@ Changelog can be found [here](https://github.com/ua-parser/uap-java/wiki#changel
 Author:
 -------
 
-  * Steve Jiang [@sjiang](https://twitter.com/sjiang)
-
-  Based on the python implementation by Lindsey Simon and using agent data from BrowserScope
+  * Steve Jiang [@zdjz](http://www.zdjizhi.com/)

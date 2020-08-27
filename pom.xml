@@ -4,11 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.ua-parser</groupId>
-  <artifactId>uap-java</artifactId>
+  <groupId>com.zdjizhi</groupId>
+  <artifactId>galaxy-ua-parser</artifactId>
   <packaging>jar</packaging>
-  <version>1.4.4-SNAPSHOT</version>
-  <name>User Agent Parser for Java</name>
+  <name>galaxy</name>
+  <version>1.0.0</version>
+  <url>http://www.zdjizhi.com/galaxy-ua-parser</url>
   
   <description>
   	Java implementation of the UA Parser library. Derives operating system, browser and device
@@ -32,25 +33,35 @@
     </developer>
   </developers>
   
-  <url>https://github.com/ua-parser/uap-java</url>
-  
   <scm>
     <connection>scm:git:git://github.com/ua-parser/uap-java.git</connection>
     <developerConnection>scm:git:ssh://github.com:ua-parser/uap-java.git</developerConnection>
     <url>http://github.com/ua-parser/uap-java/tree/master</url>
   </scm>
-  
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
+  <contributors>
+    <contributor>
+      <name>XX</name>
+      <url>https://</url>
+    </contributor>
+  </contributors>
+  <repositories>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>nexu</id>
+      <name>Team Nexus Repository</name>
+      <url>http://192.168.40.125:8099/content/repositories/galaxy-ua-parser</url>
+    </repository>
+
+  </repositories>
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>releases</name>
+      <url>http://192.168.40.125:8099/content/repositories/galaxy-ua-parser</url>
+      <uniqueVersion>true</uniqueVersion>
     </repository>
   </distributionManagement>
-  
+
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

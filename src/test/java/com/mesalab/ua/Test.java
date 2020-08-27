@@ -1,12 +1,10 @@
 package com.mesalab.ua;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mesalab.ua.dto.UserAgent;
-import eu.bitwalker.useragentutils.Browser;
-import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedWriter;
@@ -48,7 +46,7 @@ public class Test {
         //构建参数
         Map<String, Object> deleteParamMap = getDeleteSource();
         String url = "http://" + "192.168.40.193:8123";
-        deleteParamMap.put("query", "SELECT DISTINCT (user_agent) FROM k18_ods.tbs_ods_ntc_http_log_local where notEmpty(user_agent) LIMIT 100 FORMAT JSON;");
+        deleteParamMap.put("query", "SELECT DISTINCT (user_agent) FROM k18_ods.tbs_ods_ntc_http_log_local where notEmpty(user_agent) LIMIT 100000 FORMAT JSON;");
         // 发送请求解析结果
         String result = restTemplate.postForObject(getUrlWithParams(url, deleteParamMap), httpEntity, String.class);
 
@@ -61,30 +59,46 @@ public class Test {
         Collections.sort(uaList);
         String filePath = "C:\\Users\\Administrator\\Desktop\\data\\2.2.0\\uap.txt";
 
-        UserAgentAnalyzer uaa = UserAgentAnalyzer
-                .newBuilder()
-                .hideMatcherLoadStats()
-                .withCache(10000)
-                .build();
+//        UserAgentAnalyzer uaa = UserAgentAnalyzer
+//                .newBuilder()
+//                .hideMatcherLoadStats()
+//                .withCache(10000)
+//                .build();
         //输出到文件
         try(BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)))){
             Parser parser = new Parser();
-            int num =0;
-            for ( String ua : uaList) {
-                num++;
+            double num =0;
+            double num2 =0;
+            StopWatch sw = new StopWatch();
+            sw.start();
+            System.err.println("***********开始解析***********");
+             for ( String ua : uaList) {
+
                 UserAgent parse = parser.parse(ua);
 //                eu.bitwalker.useragentutils.UserAgent userAgent = eu.bitwalker.useragentutils.UserAgent.parseUserAgentString(ua);
-                Browser browser = Browser.parseUserAgentString(ua);
+//                Browser browser = Browser.parseUserAgentString(ua);
 //                System.err.println(JSON.toJSONString(operatingSystem));
 //                System.err.println(JSON.toJSONString(userAgent));
 //                System.err.println(JSON.toJSONString(browser));
-                nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(ua);
+//                nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(ua);
 //                System.err.println(ua);
-    System.err.println("\n"+num+": "+"\n"+JSON.toJSONString( parse.client ,true)+"\n"+"browser: "+browser+"\n"+"DeviceClass:"+agent);
+//                    System.err.println("\n"+num+": "+"\n"+JSON.toJSONString( parse.os ,true)+ "\n"+"DeviceClass:"+agent);
+                 if ("Other".equals(parse.os.name)||"Other".equals(parse.os.version)||"Other".equals(parse.os.platform)){
+                     num++;
+                 }
+
+                if ("Other".equals(parse.device.name)||"Other".equals(parse.device.type)||"Other".equals(parse.device.brand)||"Other".equals(parse.device.model)){
+                    num2++;
+                }
 //                fos.write(JSON.toJSONString( parser.parse(ua)));
 //                fos.newLine();
             }
-        };
+            sw.stop();
+            System.out.println("解析ua 用时："+ sw.getTotalTimeSeconds()+" S");
+            System.out.println("总共ua os条数："+ uaList.size()+", 未解出条数："+num+" , 解析率为："+String.format("%.2f %%",((uaList.size()-num)/uaList.size())*100));
+            System.out.println("总共ua device条数："+ uaList.size()+", 未解出条数："+num2+" , 解析率为："+String.format("%.2f %%",(((uaList.size()-num2)/uaList.size())*100)));
+            System.err.println("***********结束解析***********");
+        }
 
 
     }

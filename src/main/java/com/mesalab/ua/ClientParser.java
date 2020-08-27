@@ -127,7 +127,6 @@ public class ClientParser {
                 type = "Other";
             }
 
-            System.out.println("client: " + pattern);
             return name == null ? null : new Client(name, version, type, engine, engineVersion);
         }
 

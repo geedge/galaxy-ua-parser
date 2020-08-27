@@ -105,15 +105,17 @@ public class OSParser {
           }
       } else if (groupCount >= 1) {
         name = matcher.group(1);
+      } else {
+        name = "Other";
       }
 
       if (versionReplacement != null) {
         version = getReplacement(matcher, versionReplacement);
       } else if (groupCount >= 2) {
         version = matcher.group(2);
+      } else {
+        version = "Other";
       }
-
-
 
       if (platformReplacement != null) {
         platform = getReplacement(matcher, platformReplacement);
@@ -121,6 +123,7 @@ public class OSParser {
         platform = "Other";
       }
 
+//      System.out.println("oa : "+pattern);
       return name == null ? null : new OS(name, version, platform);
     }
 
