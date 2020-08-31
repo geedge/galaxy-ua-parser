@@ -1,49 +1,93 @@
 client_parsers:
+  ## Google/
+  - regex: '(AppleWebKit)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)\s+\(KHTML,\s+like\s+Gecko.*?(Chromium|Chrome)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)'
+    name_replacement: '$3'
+    version_replacement: '$4'
+    type_replacement: 'Browser'
+    engine_replacement: 'WebKit'
+    engine_version_replacement: '$2'
+  ## Google/iOS
+  - regex: '(AppleWebKit)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)\s+\(KHTML,\s+like\s+Gecko.*?(CriOS)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)'
+    name_replacement: 'Chrome Mobile iOS'
+    version_replacement: '$4'
+    type_replacement: 'Mobile Browser'
+    engine_replacement: 'WebKit'
+    engine_version_replacement: '$2'
+  ## Google/CrMo
+  - regex: '(AppleWebKit)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)\s+\(KHTML,\s+like\s+Gecko.*?(CrMo)/(\d+)\.\d+(?:\.\d+|)(?:\.\d+|)'
+    name_replacement: 'Chrome Mobile'
+    version_replacement: '$4'
+    type_replacement: 'Mobile Browser'
+    engine_replacement: 'WebKit'
+    engine_version_replacement: '$2'
+
+  ## Mozilla/4.0 (compatible; MSIE 5.23; Macintosh; PPC) Escape 5.1.8
+  - regex: '(MSIE)\s+(\d+)\.\d+(?:\.\d+|)(?:\.\d+|).*?Escape'
+    name_replacement: 'IE'
+    version_replacement: '$2'
+    type_replacement: 'Browser'
+    engine_replacement: 'Trident'
+
   #### SPECIAL CASES TOP ####
 
   # ESRI Server products
   - regex: '(GeoEvent Server) (\d+)(?:\.(\d+)(?:\.(\d+)|)|)'
+    name_replacement: '$1'
+    version_replacement: '2'
 
   # ESRI ArcGIS Desktop Products
   - regex: '(ArcGIS Pro)(?: (\d+)\.(\d+)\.([^ ]+)|)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   - regex: 'ArcGIS Client Using WinInet'
     name_replacement: 'ArcMap'
 
   - regex: '(OperationsDashboard)-(?:Windows)-(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Operations Dashboard for ArcGIS'
+    version_replacement: '$2'
 
   - regex: '(arcgisearth)/(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'ArcGIS Earth'
+    version_replacement: '$2'
 
   - regex: 'com.esri.(earth).phone/(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'ArcGIS Earth'
+    version_replacement: '$2'
 
   # ESRI ArcGIS Mobile Products
   - regex: '(arcgis-explorer)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Explorer for ArcGIS'
+    version_replacement: '$2'
 
   - regex: 'arcgis-(collector|aurora)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Collector for ArcGIS'
+    version_replacement: '$2'
 
   - regex: '(arcgis-workforce)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Workforce for ArcGIS'
+    version_replacement: '$2'
 
   - regex: '(Collector|Explorer|Workforce)-(?:Android|iOS)-(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: '$1 for ArcGIS'
+    version_replacement: '$2'
 
   - regex: '(Explorer|Collector)/(\d+) CFNetwork'
     name_replacement: '$1 for ArcGIS'
+    version_replacement: '$2'
 
   # ESRI ArcGIS Runtimes
   - regex: 'ArcGISRuntime-(Android|iOS|NET|Qt)/(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'ArcGIS Runtime SDK for $1'
+    version_replacement: '$2'
 
   - regex: 'ArcGIS\.?(iOS|Android|NET|Qt)(?:-|\.)(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'ArcGIS Runtime SDK for $1'
+    version_replacement: '$2'
 
   - regex: 'ArcGIS\.Runtime\.(Qt)\.(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'ArcGIS Runtime SDK for $1'
+    version_replacement: '$2'
 
   # CFNetwork Podcast catcher Applications
   - regex: '^(Luminary)[Stage]+/(\d+) CFNetwork'
@@ -71,17 +115,21 @@ client_parsers:
   # @note: iOS / OSX Applications
   - regex: '(CFNetwork)(?:/(\d+)\.(\d+)(?:\.(\d+)|)|)'
     name_replacement: 'CFNetwork'
+    version_replacement: '$2'
 
   # Pingdom
   - regex: '(Pingdom\.com_bot_version_)(\d+)\.(\d+)'
     name_replacement: 'PingdomBot'
+    version_replacement: '$2'
   # 'Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PingdomTMS/0.8.5 Safari/534.34'
   - regex: '(PingdomTMS)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'PingdomBot'
+    version_replacement: '$2'
 
   # PTST / WebPageTest.org crawlers
   - regex: ' (PTST)/(\d+)(?:\.(\d+)|)$'
     name_replacement: 'WebPageTest.org bot'
+    version_replacement: '$2'
 
   # Datanyze.com spider
   - regex: 'X11; (Datanyze); Linux'
@@ -89,17 +137,22 @@ client_parsers:
   # New Relic Pinger
   - regex: '(NewRelicPinger)/(\d+)\.(\d+)'
     name_replacement: 'NewRelicPingerBot'
+    version_replacement: '$2'
 
   # Tableau
   - regex: '(Tableau)/(\d+)\.(\d+)'
     name_replacement: 'Tableau'
+    version_replacement: '$2'
 
   # Adobe CreativeCloud
   - regex: 'AppleWebKit/\d+\.\d+.* Safari.* (CreativeCloud)/(\d+)\.(\d+).(\d+)'
     name_replacement: 'Adobe CreativeCloud'
+    version_replacement: '$2'
 
   # Salesforce
   - regex: '(Salesforce)(?:.)\/(\d+)\.(\d?)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   #StatusCake
   - regex: '(\(StatusCake\))'
@@ -108,6 +161,8 @@ client_parsers:
   # Facebook
   - regex: '(facebookexternalhit)/(\d+)\.(\d+)'
     name_replacement: 'FacebookBot'
+    version_replacement: '$2'
+
 
   # Google Plus
   - regex: 'Google.*/\+/web/snippet'
@@ -124,6 +179,7 @@ client_parsers:
   # Twitter
   - regex: '(Twitterbot)/(\d+)\.(\d+)'
     name_replacement: 'Twitterbot'
+    version_replacement: '$2'
 
   # Bots Pattern 'name/0.0.0'
   - regex: '/((?:Ant-|)Nutch|[A-z]+[Bb]ot|[A-z]+[Ss]pider|Axtaris|fetchurl|Isara|ShopSalad|Tailsweep)[ \-](\d+)(?:\.(\d+)|)(?:\.(\d+)|)'
@@ -133,9 +189,12 @@ client_parsers:
   # MSIECrawler
   - regex: '(MSIE) (\d+)\.(\d+)([a-z]\d|[a-z]|);.* MSIECrawler'
     name_replacement: 'MSIECrawler'
+    version_replacement: '$2'
 
   # DAVdroid
   - regex: '(DAVdroid)/(\d+)\.(\d+)(?:\.(\d+)|)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # Downloader ...
   - regex: '(Google-HTTP-Java-Client|Apache-HttpClient|Go-http-client|scalaj-http|http%20client|Python-urllib|HttpMonitor|TLSProber|WinHTTP|JNLP|okhttp|aihttp|reqwest|axios|unirest-(?:java|python|ruby|nodejs|php|net))(?:[ /](\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)'
@@ -143,6 +202,7 @@ client_parsers:
   # Pinterestbot
   - regex: '(Pinterest(?:bot|))/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)[;\s(]+\+https://www.pinterest.com/bot.html'
     name_replacement: 'Pinterestbot'
+    version_replacement: '$2'
 
   # Bots
   - regex: '(CSimpleSpider|Cityreview Robot|CrawlDaddy|CrawlFire|Finderbots|Index crawler|Job Roboter|KiwiStatus Spider|Lijit Crawler|QuerySeekerSpider|ScollSpider|Trends Crawler|USyd-NLP-Spider|SiteCat Webbot|BotName\/\$BotVersion|123metaspider-Bot|1470\.net crawler|50\.nu|8bo Crawler Bot|Aboundex|Accoona-[A-z]{1,30}-Agent|AdsBot-Google(?:-[a-z]{1,30}|)|altavista|AppEngine-Google|archive.{0,30}\.org_bot|archiver|Ask Jeeves|[Bb]ai[Dd]u[Ss]pider(?:-[A-Za-z]{1,30})(?:-[A-Za-z]{1,30}|)|bingbot|BingPreview|blitzbot|BlogBridge|Bloglovin|BoardReader Blog Indexer|BoardReader Favicon Fetcher|boitho.com-dc|BotSeer|BUbiNG|\b\w{0,30}favicon\w{0,30}\b|\bYeti(?:-[a-z]{1,30}|)|Catchpoint(?: bot|)|[Cc]harlotte|Checklinks|clumboot|Comodo HTTP\(S\) Crawler|Comodo-Webinspector-Crawler|ConveraCrawler|CRAWL-E|CrawlConvera|Daumoa(?:-feedfetcher|)|Feed Seeker Bot|Feedbin|findlinks|Flamingo_SearchEngine|FollowSite Bot|furlbot|Genieo|gigabot|GomezAgent|gonzo1|(?:[a-zA-Z]{1,30}-|)Googlebot(?:-[a-zA-Z]{1,30}|)|Google SketchUp|grub-client|gsa-crawler|heritrix|HiddenMarket|holmes|HooWWWer|htdig|ia_archiver|ICC-Crawler|Icarus6j|ichiro(?:/mobile|)|IconSurf|IlTrovatore(?:-Setaccio|)|InfuzApp|Innovazion Crawler|InternetArchive|IP2[a-z]{1,30}Bot|jbot\b|KaloogaBot|Kraken|Kurzor|larbin|LEIA|LesnikBot|Linguee Bot|LinkAider|LinkedInBot|Lite Bot|Llaut|lycos|Mail\.RU_Bot|masscan|masidani_bot|Mediapartners-Google|Microsoft .{0,30} Bot|mogimogi|mozDex|MJ12bot|msnbot(?:-media {0,2}|)|msrbot|Mtps Feed Aggregation System|netresearch|Netvibes|NewsGator[^/]{0,30}|^NING|Nutch[^/]{0,30}|Nymesis|ObjectsSearch|OgScrper|Orbiter|OOZBOT|PagePeeker|PagesInventory|PaxleFramework|Peeplo Screenshot Bot|PlantyNet_WebRobot|Pompos|Qwantify|Read%20Later|Reaper|RedCarpet|Retreiver|Riddler|Rival IQ|scooter|Scrapy|Scrubby|searchsight|seekbot|semanticdiscovery|SemrushBot|Simpy|SimplePie|SEOstats|SimpleRSS|SiteCon|Slackbot-LinkExpanding|Slack-ImgProxy|Slurp|snappy|Speedy Spider|Squrl Java|Stringer|TheUsefulbot|ThumbShotsBot|Thumbshots\.ru|Tiny Tiny RSS|Twitterbot|WhatsApp|URL2PNG|Vagabondo|VoilaBot|^vortex|Votay bot|^voyager|WASALive.Bot|Web-sniffer|WebThumb|WeSEE:[A-z]{1,30}|WhatWeb|WIRE|WordPress|Wotbox|www\.almaden\.ibm\.com|Xenu(?:.s|) Link Sleuth|Xerka [A-z]{1,30}Bot|yacy(?:bot|)|YahooSeeker|Yahoo! Slurp|Yandex\w{1,30}|YodaoBot(?:-[A-z]{1,30}|)|YottaaMonitor|Yowedo|^Zao|^Zao-Crawler|ZeBot_www\.ze\.bz|ZooShot|ZyBorg|ArcGIS Hub Indexer)(?:[ /]v?(\d+)(?:\.(\d+)(?:\.(\d+)|)|)|)'
@@ -386,6 +446,7 @@ client_parsers:
     name_replacement: 'Edge Mobile'
   - regex: '(EdgiOS|EdgA)/(\d+)\.(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Edge Mobile'
+    version_replacement: '$2'
 
   # Samsung Internet (based on Chrome, but lacking some features)
   - regex: '(SamsungBrowser)/(\d+)\.(\d+)'
@@ -530,24 +591,31 @@ client_parsers:
   - regex: 'Microsoft Office Outlook 12\.\d+\.\d+|MSOffice 12'
     name_replacement: 'Outlook'
     version_replacement: '2007'
+    type_replacement: 'application'
 
   # Outlook 2010
   - regex: 'Microsoft Outlook 14\.\d+\.\d+|MSOffice 14'
     name_replacement: 'Outlook'
     version_replacement: '2010'
+    type_replacement: 'application'
 
   # Outlook 2013
   - regex: 'Microsoft Outlook 15\.\d+\.\d+'
     name_replacement: 'Outlook'
     version_replacement: '2013'
+    type_replacement: 'application'
 
   # Outlook 2016
   - regex: 'Microsoft Outlook (?:Mail )?16\.\d+\.\d+|MSOffice 16'
     name_replacement: 'Outlook'
     version_replacement: '2016'
+    type_replacement: 'application'
 
   # Word 2014
   - regex: 'Microsoft Office (Word) 2014'
+    name_replacement: 'Office'
+    version_replacement: '2014'
+    type_replacement: 'application'
 
   # Windows Live Mail
   - regex: 'Outlook-Express\/7\.0.*'
@@ -708,6 +776,7 @@ client_parsers:
   # http://www.anandtech.com/show/3982/windows-phone-7-review
   - regex: '(MSIE) (\d+)\.(\d+).*XBLWP7'
     name_replacement: 'IE Large Screen'
+    version_replacement: '$2'
 
   # Nextcloud desktop sync client
   - regex: '(Nextcloud)'
@@ -813,42 +882,64 @@ client_parsers:
     type_replacement: 'Browser'
   - regex: '(Series60)/(\d+)\.(\d+)'
     name_replacement: 'Nokia OSS Browser'
+    version_replacement: '$2'
   - regex: '(S40OviBrowser)/(\d+)\.(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Ovi Browser'
+    version_replacement: '$2'
   - regex: '(Nokia)[EN]?(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # BlackBerry devices
   - regex: '(PlayBook).+RIM Tablet OS (\d+)\.(\d+)\.(\d+)'
     name_replacement: 'BlackBerry WebKit'
+    version_replacement: '$2'
   - regex: '(Black[bB]erry|BB10).+Version/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'BlackBerry WebKit'
+    version_replacement: '$2'
   - regex: '(Black[bB]erry)\s?(\d+)'
     name_replacement: 'BlackBerry'
+    version_replacement: '$2'
 
   - regex: '(OmniWeb)/v(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   - regex: '(Blazer)/(\d+)\.(\d+)'
     name_replacement: 'Palm Blazer'
+    version_replacement: '$2'
 
   - regex: '(Pre)/(\d+)\.(\d+)'
     name_replacement: 'Palm Pre'
+    version_replacement: '$2'
 
   # fork of Links
   - regex: '(ELinks)/(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
   - regex: '(ELinks) \((\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
   - regex: '(Links) \((\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   - regex: '(QtWeb) Internet Browser/(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   #- regex: '\(iPad;.+(Version)/(\d+)\.(\d+)(?:\.(\d+)|).*Safari/'
   #  name_replacement: 'iPad'
 
   # Phantomjs, should go before Safari
   - regex: '(PhantomJS)/(\d+)\.(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # WebKit Nightly
   - regex: '(AppleWebKit)/(\d+)(?:\.(\d+)|)\+ .* Safari'
     name_replacement: 'WebKit Nightly'
+    version_replacement: '$2'
 
   # Safari
   - regex: '(Version)/(\d+)\.(\d+)(?:\.(\d+)|).*Safari/'
@@ -863,49 +954,76 @@ client_parsers:
     version_replacement: '0'
 
   - regex: '(SEMC\-Browser)/(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   - regex: '(Teleca)'
     name_replacement: 'Teleca Browser'
 
   - regex: '(Phantom)/V(\d+)\.(\d+)'
     name_replacement: 'Phantom Browser'
+    version_replacement: '$2'
 
   - regex: '(Trident)/(7|8)\.(0)'
     name_replacement: 'IE'
     version_replacement: '11'
+    type_replacement: 'Browser'
+    engine_replacement: 'Trident'
+    engine_version_replacement: '$2'
 
   - regex: '(Trident)/(6)\.(0)'
     name_replacement: 'IE'
     version_replacement: '10'
+    type_replacement: 'Browser'
+    engine_replacement: 'Trident'
+    engine_version_replacement: '6'
 
   - regex: '(Trident)/(5)\.(0)'
     name_replacement: 'IE'
     version_replacement: '9'
+    type_replacement: 'Browser'
+    engine_replacement: 'Trident'
+    engine_version_replacement: '5'
 
   - regex: '(Trident)/(4)\.(0)'
     name_replacement: 'IE'
     version_replacement: '8'
+    type_replacement: 'Browser'
+    engine_replacement: 'Trident'
+    engine_version_replacement: '4'
 
   # Espial
   - regex: '(Espial)/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)'
+    name_replacement: '$1'
+    version_replacement: '$2'
+
 
   # Apple Mail
 
   # apple mail - not directly detectable, have it after Safari stuff
   - regex: '(AppleWebKit)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Apple Mail'
+    version_replacement: '$2'
+
 
   # AFTER THE EDGE CASES ABOVE!
   # AFTER IE11
   # BEFORE all other IE
   - regex: '(Firefox)/(\d+)\.(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
   - regex: '(Firefox)/(\d+)\.(\d+)(pre|[ab]\d+[a-z]*|)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   - regex: '([MS]?IE) (\d+)\.(\d+)'
     name_replacement: 'IE'
+    version_replacement: '$2'
+    engine_replacement: 'Trident'
 
   - regex: '(python-requests)/(\d+)\.(\d+)'
     name_replacement: 'Python Requests'
+    version_replacement: '$2'
 
   # headless user-agents
   - regex: '\b(Windows-Update-Agent|WindowsPowerShell|Microsoft-CryptoAPI|SophosUpdateManager|SophosAgent|Debian APT-HTTP|Ubuntu APT-HTTP|libcurl-agent|libwww-perl|urlgrabber|curl|PycURL|Wget|wget2|aria2|Axel|OpenBSD ftp|lftp|jupdate|insomnia|fetch libfetch|akka-http|got)(?:[ /](\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)'
@@ -913,6 +1031,7 @@ client_parsers:
   # Asynchronous HTTP Client/Server for asyncio and Python (https://aiohttp.readthedocs.io/)
   - regex: '(Python/3\.\d{1,3} aiohttp)/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Python aiohttp'
+    version_replacement: '$2'
 
   - regex: '(Java)[/ ]?\d+\.(\d+)\.(\d+)[_-]*([a-zA-Z0-9]+|)'
 
@@ -926,20 +1045,28 @@ client_parsers:
   - regex: '^(rusoto)/(\d+)\.(\d+)\.(\d+)'
   # rclone - rsync for cloud storage - https://rclone.org/
   - regex: '^(rclone)/v(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # Roku Digital-Video-Players https://www.roku.com/
   - regex: '^(Roku)/DVP-(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # Kurio App News Reader https://kurio.co.id/
   - regex: '(Kurio)\/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Kurio App'
+    version_replacement: '$2'
 
   # Box Drive and Box Sync https://www.box.com/resources/downloads
   - regex: '^(Box(?: Sync)?)/(\d+)\.(\d+)\.(\d+)'
+    name_replacement: '$1'
+    version_replacement: '$2'
 
   # ViaFree streaming app https://www.viafree.{dk|se|no}
   - regex: '^(ViaFree|Viafree)-(?:tvOS-)?[A-Z]{2}/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'ViaFree'
+    version_replacement: '$2'
 
 
 os_parsers:

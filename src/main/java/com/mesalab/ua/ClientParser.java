@@ -100,31 +100,34 @@ public class ClientParser {
                 return null;
             }
 
-            int groupCount = matcher.groupCount();
-
             if (nameReplacement != null) {
-                if (nameReplacement.contains("$1") && groupCount >= 1 && matcher.group(1) != null) {
-                    name = nameReplacement.replaceFirst("\\$1", Matcher.quoteReplacement(matcher.group(1)));
-                } else {
-                    name = nameReplacement;
-                }
-            } else if (groupCount >= 1) {
-                name = matcher.group(1);
+                name = Utils.getReplacement(matcher, nameReplacement);
+            } else {
+                name = nameReplacement;
             }
 
             if (versionReplacement != null) {
+                version = Utils.getReplacement(matcher, versionReplacement);
+            } else {
                 version = versionReplacement;
-            } else if (groupCount >= 2) {
-                String group2 = matcher.group(2);
-                if (!isBlank(group2)) {
-                    version = group2;
-                }
             }
 
             if (typeReplacement != null) {
                 type = Utils.getReplacement(matcher, typeReplacement);
             } else {
                 type = "Other";
+            }
+
+            if (engineReplacement != null) {
+                engine = Utils.getReplacement(matcher, engineReplacement);
+            } else {
+                engine = "Other";
+            }
+
+            if (engineVersionReplacement != null) {
+                engineVersion = Utils.getReplacement(matcher, engineVersionReplacement);
+            } else {
+                engineVersion = "Other";
             }
 
             return name == null ? null : new Client(name, version, type, engine, engineVersion);
