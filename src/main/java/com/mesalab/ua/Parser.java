@@ -42,6 +42,7 @@ public class Parser {
 
     /**
      * Creates a parser using the regular expression yaml file bundled in the jar.
+     *
      * @throws IOException if there's a problem reading the file from the classpath
      */
     public Parser() throws IOException {
@@ -53,6 +54,7 @@ public class Parser {
     /**
      * Creates a parser using the supplied regular expression yaml file.
      * It is the responsibility of the caller to close the InputStream after construction.
+     *
      * @param regexYaml the yaml file containing the regular expressions
      */
     public Parser(InputStream regexYaml) {
@@ -64,10 +66,19 @@ public class Parser {
         OS os = parseOS(agentString);
         Device device = deviceParser.parse(agentString);
 
-        os.setPlatform(device.name);
         String category = device.type;
 
-        return new UserAgent(client, os, device, category,System.currentTimeMillis() / 1000, agentString);
+        return new UserAgent(client, os, device, category, System.currentTimeMillis() / 1000, agentString);
+    }
+
+    public UserAgent parse(String agentString, Long lastVisit) {
+        Client client = parseClient(agentString);
+        OS os = parseOS(agentString);
+        Device device = deviceParser.parse(agentString);
+
+        String category = device.type;
+
+        return new UserAgent(client, os, device, category, lastVisit, agentString);
     }
 
     public Client parseClient(String agentString) {

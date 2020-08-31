@@ -1,9 +1,9 @@
 os_parsers:
   ########自定义 开始########
   # android 系统 待验证
-  - regex: '([a|A]ndroid)[^\d]*(\d)[_|.]([\d[_|.]]+\d)'
-    name_replacement: 'Android'
-    version_replacement: '$2'
+#  - regex: '([a|A]ndroid)[^\d]*(\d)[_|.]([\d[_|.]]+\d)'
+#    name_replacement: 'Android'
+#    version_replacement: '$2'
 
 
 
@@ -96,34 +96,42 @@ os_parsers:
   # can actually detect rooted android os. do we care?
   ##########
   - regex: '(Android)[ \-/](\d+)(?:\.(\d+)|)(?:[.\-]([a-z0-9]+)|)'
-
+    name_replacement: 'Android'
+    version_replacement: '$2'
+    platform_replacement: 'Android'
   - regex: '(Android) Donut'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Android'
 
   - regex: '(Android) Eclair'
     version_replacement: '2'
-    platform_replacement:
+    platform_replacement: 'Android'
 
   - regex: '(Android) Froyo'
     version_replacement: '2'
-    platform_replacement:
+    platform_replacement: 'Android'
 
   - regex: '(Android) Gingerbread'
     version_replacement: '2'
-    platform_replacement:
+    platform_replacement: 'Android'
 
   - regex: '(Android) Honeycomb'
     version_replacement: '3'
+    platform_replacement: 'Android'
 
   # Android 9; Android 10;
   - regex: '(Android) (\d+);'
+    platform_replacement: 'Android'
 
   # UCWEB
   - regex: '^UCWEB.*; (Adr) (\d+)\.(\d+)(?:[.\-]([a-z0-9]+)|);'
     name_replacement: 'Android'
+    platform_replacement: 'Android'
+
   - regex: '^UCWEB.*; (iPad|iPh|iPd) OS (\d+)_(\d+)(?:_(\d+)|);'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
+
   - regex: '^UCWEB.*; (wds) (\d+)\.(\d+)(?:\.(\d+)|);'
     name_replacement: 'Windows Phone'
   # JUC
@@ -133,6 +141,7 @@ os_parsers:
   # Salesforce
   - regex: '(android)\s(?:mobile\/)(\d+)(?:\.(\d+)(?:\.(\d+)|)|)'
     name_replacement: 'Android'
+
 
   ##########
   # Kindle Android
@@ -169,14 +178,16 @@ os_parsers:
   - regex: '(Windows 10)'
     name_replacement: 'Windows'
     version_replacement: '10'
+    platform_replacement: 'Windows 10'
 
   - regex: '(Windows (?:NT 5\.2|NT 5\.1))'
     name_replacement: 'Windows'
     version_replacement: 'XP'
-
+    platform_replacement: 'WinXP'
   - regex: '(Win(?:dows NT |32NT\/)6\.1)'
     name_replacement: 'Windows'
     version_replacement: '7'
+    platform_replacement: 'Windows 7'
 
   - regex: '(Win(?:dows NT |32NT\/)6\.0)'
     name_replacement: 'Windows'
@@ -185,6 +196,7 @@ os_parsers:
   - regex: '(Win 9x 4\.90)'
     name_replacement: 'Windows'
     version_replacement: 'ME'
+    platform_replacement: 'Windows ME'
 
   - regex: '(Windows NT 6\.2; ARM;)'
     name_replacement: 'Windows'
@@ -193,48 +205,57 @@ os_parsers:
   - regex: '(Win(?:dows NT |32NT\/)6\.2)'
     name_replacement: 'Windows'
     version_replacement: '8'
+    platform_replacement: 'Windows'
 
   - regex: '(Windows NT 6\.3; ARM;)'
     name_replacement: 'Windows'
     version_replacement: 'RT 8'
-    platform_replacement:
+    platform_replacement: 'Windows RT'
 
   - regex: '(Win(?:dows NT |32NT\/)6\.3)'
     name_replacement: 'Windows'
     version_replacement: '8'
-    platform_replacement:
+    platform_replacement: 'Windows 8'
 
   - regex: '(Win(?:dows NT |32NT\/)6\.4)'
     name_replacement: 'Windows'
     version_replacement: '10'
+    platform_replacement: 'Windows 10'
 
   - regex: '(Windows NT 10\.0)'
     name_replacement: 'Windows'
     version_replacement: '10'
+    platform_replacement: 'Windows 10'
 
   - regex: '(Windows NT 5\.0)'
     name_replacement: 'Windows'
     version_replacement: '2000'
+    platform_replacement: 'Windows 2000'
 
   - regex: '(WinNT4.0)'
     name_replacement: 'Windows'
     version_replacement: 'NT 4.0'
+    platform_replacement: 'Windows NT'
 
   - regex: '(Windows ?CE)'
     name_replacement: 'Windows'
     version_replacement: 'CE'
+    platform_replacement: 'Windows CE'
 
   - regex: 'Win(?:dows)? ?(95|98|3.1|NT|ME|2000|XP|Vista|7|CE)'
     name_replacement: 'Windows'
     version_replacement: '$1'
+    platform_replacement: 'Windows $1'
 
   - regex: 'Win16'
     name_replacement: 'Windows'
     version_replacement: '3.1'
+    platform_replacement: 'Win16'
 
   - regex: 'Win32'
     name_replacement: 'Windows'
     version_replacement: '95'
+    platform_replacement: 'Win32'
 
   # Box apps (Drive, Sync, Notes) on Windows https://www.box.com/resources/downloads
   - regex: '^Box.*Windows/([\d.]+);'
@@ -257,37 +278,39 @@ os_parsers:
   - regex: '\w+\s+Mac OS X\s+\w+\s+(\d+).(\d+).(\d+).*'
     name_replacement: 'Mac OS X'
     version_replacement: '$1'
+    platform_replacement: 'Mac OS X'
   # Leopard
   - regex: ' (Dar)(win)/(9).(\d+).*\((?:i386|x86_64|Power Macintosh)\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   # Snow Leopard
   - regex: ' (Dar)(win)/(10).(\d+).*\((?:i386|x86_64)\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   # Lion
   - regex: ' (Dar)(win)/(11).(\d+).*\((?:i386|x86_64)\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   # Mountain Lion
   - regex: ' (Dar)(win)/(12).(\d+).*\((?:i386|x86_64)\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   # Mavericks
   - regex: ' (Dar)(win)/(13).(\d+).*\((?:i386|x86_64)\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   # Yosemite is Darwin/14.x but patch versions are inconsistent in the Darwin string;
   # more accurately covered by CFNetwork regexes downstream
 
   # IE on Mac doesn't specify version number
   - regex: 'Mac_PowerPC'
     name_replacement: 'Mac OS'
+    platform_replacement: 'Mac OS'
 
   # builds before tiger don't seem to specify version?
 
@@ -297,6 +320,7 @@ os_parsers:
   # Box Drive and Box Sync on Mac OS X use OSX version numbers, not Darwin
   - regex: '^Box.*;(Darwin)/(10)\.(1\d)(?:\.(\d+)|)'
     name_replacement: 'Mac OS X'
+    platform_replacement: 'Mac OS X'
 
   ##########
   # iOS
@@ -305,84 +329,101 @@ os_parsers:
   # keep this above generic iOS, since AppleTV UAs contain 'CPU OS'
   - regex: '(Apple\s?TV)(?:/(\d+)\.(\d+)|)'
     name_replacement: 'ATV OS X'
+    platform_replacement: 'ATV OS X'
 
   - regex: '(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS)[ +]+(\d+)[_\.](\d+)(?:[_\.](\d+)|)'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
 
   # remaining cases are mostly only opera uas, so catch opera as to not catch iphone spoofs
   - regex: '(iPhone|iPad|iPod); Opera'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
 
   # few more stragglers
   - regex: '(iPhone|iPad|iPod).*Mac OS X.*Version/(\d+)\.(\d+)'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
 
   # CFNetwork/Darwin - The specific CFNetwork or Darwin version determines
   # whether the os maps to Mac OS, or iOS, or just Darwin.
   # See: http://user-agents.me/cfnetwork-version-list
   - regex: '(CFNetwork)/(5)48\.0\.3.* Darwin/11\.0\.0'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/(5)48\.(0)\.4.* Darwin/(1)1\.0\.0'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/(5)48\.(1)\.4'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/(4)85\.1(3)\.9'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/(6)09\.(1)\.4'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/(6)(0)9'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/6(7)2\.(1)\.13'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/6(7)2\.(1)\.(1)4'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '(CF)(Network)/6(7)(2)\.1\.15'
     name_replacement: 'iOS'
     version_replacement: '7'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: '(CFNetwork)/6(7)2\.(0)\.(?:2|8)'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
+
   - regex: '(CFNetwork)/709\.1'
     name_replacement: 'iOS'
     version_replacement: '8'
-    os_v2_replacement: '0.b5'
+    platform_replacement: 'iOS'
   - regex: '(CF)(Network)/711\.(\d)'
     name_replacement: 'iOS'
     version_replacement: '8'
+    platform_replacement: 'iOS'
   - regex: '(CF)(Network)/(720)\.(\d)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   - regex: '(CF)(Network)/(760)\.(\d)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   - regex: 'CFNetwork/7.* Darwin/15\.4\.\d+'
     name_replacement: 'iOS'
     version_replacement: '9'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/7.* Darwin/15\.5\.\d+'
     name_replacement: 'iOS'
     version_replacement: '9'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/7.* Darwin/15\.6\.\d+'
     name_replacement: 'iOS'
     version_replacement: '9'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: '(CF)(Network)/758\.(\d)'
     name_replacement: 'iOS'
     version_replacement: '9'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/808\.3 Darwin/16\.3\.\d+'
     name_replacement: 'iOS'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: '(CF)(Network)/808\.(\d)'
     name_replacement: 'iOS'
     version_replacement: '10'
+    platform_replacement: 'iOS'
 
   ##########
   # CFNetwork macOS Apps (must be before CFNetwork iOS Apps
@@ -391,15 +432,15 @@ os_parsers:
   - regex: 'CFNetwork/.* Darwin/17\.\d+.*\(x86_64\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   - regex: 'CFNetwork/.* Darwin/16\.\d+.*\(x86_64\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   - regex: 'CFNetwork/8.* Darwin/15\.\d+.*\(x86_64\)'
     name_replacement: 'Mac OS X'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'Mac OS X'
   ##########
   # CFNetwork iOS Apps
   # @ref: https://en.wikipedia.org/wiki/Darwin_(operating_system)#Release_history
@@ -407,39 +448,44 @@ os_parsers:
   - regex: 'CFNetwork/.* Darwin/(9)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '1'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/.* Darwin/(10)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '4'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/.* Darwin/(11)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '5'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/.* Darwin/(13)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '6'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/6.* Darwin/(14)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '7'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/7.* Darwin/(14)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '8'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/7.* Darwin/(15)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '9'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/8.* Darwin/16\.5\.\d+'
     name_replacement: 'iOS'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/8.* Darwin/16\.6\.\d+'
     name_replacement: 'iOS'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/8.* Darwin/16\.7\.\d+'
     name_replacement: 'iOS'
     version_replacement: '10'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/8.* Darwin/(16)\.\d+'
     name_replacement: 'iOS'
@@ -447,50 +493,55 @@ os_parsers:
   - regex: 'CFNetwork/8.* Darwin/17\.0\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/8.* Darwin/17\.2\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/8.* Darwin/17\.3\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/8.* Darwin/17\.4\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/8.* Darwin/17\.5\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/9.* Darwin/17\.6\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/9.* Darwin/17\.7\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
-    platform_replacement:
+    platform_replacement: 'iOS'
 
   - regex: 'CFNetwork/8.* Darwin/(17)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '11'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/9.* Darwin/18\.0\.\d+'
     name_replacement: 'iOS'
     version_replacement: '12'
-    platform_replacement:
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/9.* Darwin/(18)\.\d+'
     name_replacement: 'iOS'
     version_replacement: '12'
+    platform_replacement: 'iOS'
   - regex: 'CFNetwork/.* Darwin/'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
 
   # iOS Apps
   - regex: '\b(iOS[ /]|iOS; |iPhone(?:/| v|[ _]OS[/,]|; | OS : |\d,\d/|\d,\d; )|iPad/)(\d{1,2})[_\.](\d{1,2})(?:[_\.](\d+)|)'
     name_replacement: 'iOS'
+    platform_replacement: 'iOS'
   - regex: '\((iOS);'
+    platform_replacement: 'iOS'
 
   ##########
   # Apple Watch
@@ -538,43 +589,59 @@ os_parsers:
   ##########
   - regex: '(Symbian[Oo][Ss])[/ ](\d+)\.(\d+)'
     name_replacement: 'Symbian OS'
+    platform_replacement: 'Symbian'
   - regex: '(Symbian/3).+NokiaBrowser/7\.3'
     name_replacement: 'Symbian^3 Anna'
+    platform_replacement: 'Symbian'
   - regex: '(Symbian/3).+NokiaBrowser/7\.4'
     name_replacement: 'Symbian^3 Belle'
+    platform_replacement: 'Symbian'
   - regex: '(Symbian/3)'
     name_replacement: 'Symbian^3'
   - regex: '\b(Series 60|SymbOS|S60Version|S60V\d|S60\b)'
     name_replacement: 'Symbian OS'
+    platform_replacement: 'Symbian'
   - regex: '(MeeGo)'
   - regex: 'Symbian [Oo][Ss]'
     name_replacement: 'Symbian OS'
+    platform_replacement: 'Symbian'
+
   - regex: 'Series40;'
     name_replacement: 'Nokia Series 40'
+    platform_replacement: 'Symbian'
   - regex: 'Series30Plus;'
     name_replacement: 'Nokia Series 30 Plus'
+    platform_replacement: 'Symbian'
 
   ##########
   # BlackBerry devices
   ##########
   - regex: '(BB10);.+Version/(\d+)\.(\d+)\.(\d+)'
     name_replacement: 'BlackBerry OS'
+    platform_replacement: 'BlackBerry'
   - regex: '(Black[Bb]erry)[0-9a-z]+/(\d+)\.(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'BlackBerry OS'
+    platform_replacement: 'BlackBerry'
   - regex: '(Black[Bb]erry).+Version/(\d+)\.(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'BlackBerry OS'
+    platform_replacement: 'BlackBerry'
   - regex: '(RIM Tablet OS) (\d+)\.(\d+)\.(\d+)'
     name_replacement: 'BlackBerry Tablet OS'
+    platform_replacement: 'BlackBerry'
   - regex: '(Play[Bb]ook)'
     name_replacement: 'BlackBerry Tablet OS'
+    platform_replacement: 'BlackBerry'
   - regex: '(Black[Bb]erry)'
     name_replacement: 'BlackBerry OS'
+    platform_replacement: 'BlackBerry'
 
   ##########
   # KaiOS
   ##########
   - regex: '(K[Aa][Ii]OS)\/(\d+)\.(\d+)(?:\.(\d+)|)'
     name_replacement: 'KaiOS'
+    platform_replacement: 'KaiOS'
+
 
   ##########
   # Firefox OS
@@ -582,42 +649,43 @@ os_parsers:
   - regex: '\((?:Mobile|Tablet);.+Gecko/18.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/18.1 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/26.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/28.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/30.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '1'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/32.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '2'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   - regex: '\((?:Mobile|Tablet);.+Gecko/34.0 Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
     version_replacement: '2'
-    platform_replacement:
+    platform_replacement: 'Firefox OS'
 
   # Firefox OS Generic
   - regex: '\((?:Mobile|Tablet);.+Firefox/\d+\.\d+'
     name_replacement: 'Firefox OS'
+    platform_replacement: 'Firefox OS'
 
 
   ##########
@@ -625,11 +693,15 @@ os_parsers:
   # yes, Brew is lower-cased for Brew MP
   ##########
   - regex: '(BREW)[ /](\d+)\.(\d+)\.(\d+)'
+    platform_replacement: 'BREW'
   - regex: '(BREW);'
+    platform_replacement: 'BREW'
   - regex: '(Brew MP|BMP)[ /](\d+)\.(\d+)\.(\d+)'
     name_replacement: 'Brew MP'
+    platform_replacement: 'BREW'
   - regex: 'BMP;'
     name_replacement: 'Brew MP'
+    platform_replacement: 'BREW'
 
   ##########
   # Google TV
@@ -643,6 +715,7 @@ os_parsers:
   ##########
   - regex: '(CrKey)(?:[/](\d+)\.(\d+)(?:\.(\d+)|)|)'
     name_replacement: 'Chromecast'
+    platform_replacement: 'Chromecast OS'
 
   ##########
   # Misc mobile
@@ -680,6 +753,7 @@ os_parsers:
     name_replacement: 'FreeBSD'
   - regex: 'linux'
     name_replacement: 'Linux'
+    platform_replacement: 'Linux'
 
   # Roku Digital-Video-Players https://www.roku.com/
   - regex: '^(Roku)/DVP-(\d+)\.(\d+)'

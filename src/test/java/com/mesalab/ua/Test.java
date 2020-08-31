@@ -2,8 +2,11 @@ package com.mesalab.ua;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mesalab.ua.dto.UserAgent;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,14 +24,13 @@ public class Test {
 
         Parser uaParser = new Parser();
         UserAgent c = uaParser.parse(uaString);
-        System.err.println(c);
-        System.out.println(c.client.name); // => "Mobile Safari"
-        System.out.println(c.client.version);  // => "5"
-        System.out.println(c.client.type);  // => "1"
-
-        System.out.println(c.os.name);        // => "iOS"
-        System.out.println(c.os.version);         // => "5"
-        System.out.println(c.os.platform);         // => "1"
+//        System.out.println(c.client.name); // => "Mobile Safari"
+//        System.out.println(c.client.version);  // => "5"
+//        System.out.println(c.client.type);  // => "1"
+//
+//        System.out.println(c.os.name);        // => "iOS"
+//        System.out.println(c.os.version);         // => "5"
+//        System.out.println(c.os.platform);         // => "1"
 
         System.out.println(c.device);    // => "iPhone"
     }
@@ -36,7 +38,6 @@ public class Test {
         String uaString = "Mozilla/6.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3";
 //        String usa = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36";
         Parser uaParser = new Parser();
-        UserAgent parse1 = uaParser.parse(uaString);
 //        System.err.println(JSON.toJSONString(parse, true));
         //创建请求头
         LinkedMultiValueMap requestMap = new LinkedMultiValueMap();
@@ -46,7 +47,7 @@ public class Test {
         //构建参数
         Map<String, Object> deleteParamMap = getDeleteSource();
         String url = "http://" + "192.168.40.193:8123";
-        deleteParamMap.put("query", "SELECT DISTINCT (user_agent) FROM k18_ods.tbs_ods_ntc_http_log_local where notEmpty(user_agent) LIMIT 100000 FORMAT JSON;");
+        deleteParamMap.put("query", "SELECT DISTINCT (user_agent) FROM k18_ods.tbs_ods_ntc_http_log_local where notEmpty(user_agent) LIMIT 10000 FORMAT JSON;");
         // 发送请求解析结果
         String result = restTemplate.postForObject(getUrlWithParams(url, deleteParamMap), httpEntity, String.class);
 
@@ -59,11 +60,11 @@ public class Test {
         Collections.sort(uaList);
         String filePath = "C:\\Users\\Administrator\\Desktop\\data\\2.2.0\\uap.txt";
 
-//        UserAgentAnalyzer uaa = UserAgentAnalyzer
-//                .newBuilder()
-//                .hideMatcherLoadStats()
-//                .withCache(10000)
-//                .build();
+        UserAgentAnalyzer uaa = UserAgentAnalyzer
+                .newBuilder()
+                .hideMatcherLoadStats()
+                .withCache(10000)
+                .build();
         //输出到文件
         try(BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)))){
             Parser parser = new Parser();
@@ -73,21 +74,17 @@ public class Test {
             sw.start();
             System.err.println("***********开始解析***********");
              for ( String ua : uaList) {
-
+                 OperatingSystem ooo = OperatingSystem.parseUserAgentString(ua);
+//                 nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(ua);
                 UserAgent parse = parser.parse(ua);
-//                eu.bitwalker.useragentutils.UserAgent userAgent = eu.bitwalker.useragentutils.UserAgent.parseUserAgentString(ua);
-//                Browser browser = Browser.parseUserAgentString(ua);
-//                System.err.println(JSON.toJSONString(operatingSystem));
-//                System.err.println(JSON.toJSONString(userAgent));
-//                System.err.println(JSON.toJSONString(browser));
-//                nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(ua);
-//                System.err.println(ua);
-//                    System.err.println("\n"+num+": "+"\n"+JSON.toJSONString( parse.os ,true)+ "\n"+"DeviceClass:"+agent);
-                 if ("Other".equals(parse.os.name)||"Other".equals(parse.os.version)||"Other".equals(parse.os.platform)){
+
+//                 System.err.println("\n"+num+": "+ua+"\n"+"DeviceClass:"+agent);
+                 if (ObjectUtils.isEmpty(parse.os.platform)||ObjectUtils.isEmpty(parse.os.version)||ObjectUtils.isEmpty(parse.os.name)|| "Other".equals(parse.os.name)||"Other".equals(parse.os.version)||"Other".equals(parse.os.platform)){
                      num++;
                  }
 
-                if ("Other".equals(parse.device.name)||"Other".equals(parse.device.type)||"Other".equals(parse.device.brand)||"Other".equals(parse.device.model)){
+                if (ObjectUtils.isEmpty(parse.device.type)||ObjectUtils.isEmpty(parse.device.brand)||ObjectUtils.isEmpty(parse.device.model)||ObjectUtils.isEmpty(parse.device.name)||"Other".equals(parse.device.name)||"Other".equals(parse.device.type)||"Other".equals(parse.device.brand)||"Other".equals(parse.device.model)){
+                    System.out.println("ua "+ua+"\n"+parse.device+"\n"+"device: "+ooo.getDeviceType());
                     num2++;
                 }
 //                fos.write(JSON.toJSONString( parser.parse(ua)));

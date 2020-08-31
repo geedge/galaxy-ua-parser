@@ -18,8 +18,6 @@ package com.mesalab.ua;
 
 import com.alibaba.fastjson.JSON;
 import com.mesalab.ua.dto.Device;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.OperatingSystem;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.ArrayList;
@@ -100,33 +98,31 @@ public class DeviceParser {
             }
 
             int groupCount = matcher.groupCount();
-            name = getReplaceResult(model, matcher, groupCount,nameReplacement);
 
+            name = getReplaceResult(model, matcher, groupCount, nameReplacement);
             if (brandReplacement != null) {
                 brand = brandReplacement;
-            } else if (groupCount >= 2) {
-                String group2 = matcher.group(2);
-                if (ObjectUtils.isNotEmpty(group2)) {
-                    brand = group2;
-                }
-            }
-
-            model = getReplaceResult(model, matcher, groupCount,modelReplacement);
-
-            if (typeReplacement != null) {
-                type = Utils.getReplacement(matcher, typeReplacement);
             } else {
-                type = "Other";
+                brand = "Other";
             }
+
+            model = getReplaceResult(model, matcher, groupCount, modelReplacement);
+
+            if (typeReplacement == null) {
+                type = "Other";
+            } else {
+                type = Utils.getReplacement(matcher, typeReplacement);
+            }
+            System.out.println("pattern+: "+pattern);
             return name == null ? null : new Device(name, brand, model, type);
         }
 
-        private String getReplaceResult(String model, Matcher matcher, int groupCount,String replacementString) {
+        private String getReplaceResult(String model, Matcher matcher, int groupCount, String replacementString) {
             if (replacementString != null) {
                 if (replacementString.contains("$")) {
                     model = replacementString;
                     for (String substitution : getSubstitutions(replacementString)) {
-                        int i = Integer.valueOf(substitution.substring(1));
+                        int i = Integer.parseInt(substitution.substring(1));
                         String replacement = matcher.groupCount() >= i && matcher.group(i) != null
                                 ? Matcher.quoteReplacement(matcher.group(i)) : "";
                         model = model.replaceFirst("\\" + substitution, replacement);

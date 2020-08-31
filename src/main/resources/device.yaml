@@ -3467,6 +3467,7 @@ device_parsers:
     name_replacement: '$1$2,$3'
     brand_replacement: 'Apple'
     model_replacement: '$1$2,$3'
+    type_replacement: 'Desktop'
   # @note: newer desktop applications don't show device info
   # This is here so as to not have them recorded as iOS-Device
   - regex: 'CFNetwork/.* Darwin/\d+\.\d+\.\d+ \(x86_64\)'

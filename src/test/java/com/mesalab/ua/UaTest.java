@@ -1,12 +1,13 @@
 package com.mesalab.ua;
 
-import com.alibaba.fastjson.JSON;
 import com.mesalab.ua.dto.UserAgent;
-import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import nl.basjes.parse.useragent.UserAgentAnalyzer;
+import org.junit.Test;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UaTest {
 
@@ -16,15 +17,14 @@ public class UaTest {
         try {
             Parser uaParser = new Parser();
             UserAgent c = uaParser.parse(uaString);
-            System.err.println(c);
+//            System.err.println(c);
             System.out.println("=============================================");
             System.out.println("=============================================");
 
-            eu.bitwalker.useragentutils.UserAgent userAgent = eu.bitwalker.useragentutils.UserAgent.parseUserAgentString(uaString);
+//            eu.bitwalker.useragentutils.UserAgent userAgent = eu.bitwalker.useragentutils.UserAgent.parseUserAgentString(uaString);
             OperatingSystem operatingSystem = OperatingSystem.parseUserAgentString(uaString);
-            Browser browser = Browser.parseUserAgentString(uaString);
-            System.err.println(JSON.toJSONString(browser));
-            System.err.println(JSON.toJSONString(userAgent));
+//            System.err.println(JSON.toJSONString(browser));
+            System.err.println(operatingSystem);
 
             System.out.println("=============================================");
 
@@ -35,10 +35,18 @@ public class UaTest {
                     .build();
 
             nl.basjes.parse.useragent.UserAgent.ImmutableUserAgent agent = uaa.parse(uaString);
-            System.err.println(agent);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+    @Test
+    public void test(){
+        String agentString = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; WOW32; Trident/7.0; .NET4.0C; .NET4.0E; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 3.5.30729; InfoPath.3)";
+        Pattern pattern = Pattern.compile("Win(?:dows NT |32NT\\/)6\\.2");
+        Matcher matcher = pattern.matcher(agentString);
+        System.out.println(matcher.find());
+
+    }
+
 }
